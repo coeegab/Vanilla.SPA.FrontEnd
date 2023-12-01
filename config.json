@@ -3,7 +3,7 @@
     "siteLogo": "assets/img/beligol.png",
     "siteName": "Beligol",
     "siteSlogan": "Acumuladores ao Extremo!",
-    "apiBaseURL": "http://localhost:3000/",
+    "apiBaseURL": "http://localhost:5000",
     "siteYear": 2023,
     "siteOwner": "Gab!",
     "siteMenu": [
