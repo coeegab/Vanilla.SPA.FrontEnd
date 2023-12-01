@@ -1,11 +1,11 @@
 {
     "siteFavicon": "assets/img/favicon.png",
-    "siteLogo": "assets/img/logotipo.png",
-    "siteName": "Cadastro de Trecos",
-    "siteSlogan": "Acumuladores ao Extremo!",
+    "siteLogo": "assets/img/bellingham.png",
+    "siteName": "Beligol",
+    "siteSlogan": "O Iluminado!",
     "apiBaseURL": "http://localhost:5000",
     "siteYear": 2019,
-    "siteOwner": "Eu Mesmo!",
+    "siteOwner": "Gab!",
     "siteMenu": [
         {
             "href": "home",
