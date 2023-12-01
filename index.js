@@ -33,7 +33,8 @@ function runApp() {
         });
 }
 
-// Função que configura o tema conforme as configurações.
+
+// Programa que configura o tema conforme as configurações.
 function configureTheme() {
     $('link[rel="icon"]').attr('href', app.siteFavicon); // jQuery: aplica o favicon em '<link rel="icon" href="favicon.png">'.
 
@@ -160,6 +161,7 @@ function dateISOtoBR(data) {
     return outDate; // Retorna data formatada.
 }
 
+
 // Função de uso geral que processa um clique no item de coleção.
 function getClickedItem() {
 
@@ -193,3 +195,4 @@ function getClickedItem() {
 
 // jQuery: quando o documento estiver na memória, executa 'runApp()'.
 $(document).ready(runApp); 
+
