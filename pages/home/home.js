@@ -3,8 +3,6 @@ function myHome() {
 
     // Define o valor da tag <title>.
     changeTitle();
-
-    // Debug: mostra se este JavaScript funciona.
     console.log('home funciona');
 
     // Limpa a sessão atual.
@@ -16,8 +14,10 @@ function myHome() {
     // Obtém todos os 'owner'.
     getAll('/owners', '#tableOwner');
 
+
     // Conclui sem fazer mais nada.
     return false;
+
 
 }
 
@@ -27,10 +27,15 @@ function getAll(endPoint, tableId) {
     // View da tabela.
     var tableData = '';
 
-    // jQuery: acessa o endpoint da API.
+
+    // Acessa o endpoint da API.
     $.get(app.apiBaseURL + endPoint)
 
+        // Se deu certo.
+
+
         // jQuery: se deu certo.
+
         .done((apiData) => {
 
             // Debug: exibe dados da API no console.
@@ -62,13 +67,61 @@ function getAll(endPoint, tableId) {
             // Exibe o total de registros na tabela.
             tableData += `<tr><td>Total de ${numItems} registros.</td></tr>`;
 
+
+           
+
+            // Monitora cliques nos itens das células da tabela.
+
             // jQuery: envia a 'view' para a página, e exibe no elemento <tbody> da tabela correspondente.
             $(tableId + ' tbody').html(tableData);
 
             // jQuery: monitora cliques nos itens das células da tabela.
+
             $('.' + tdClass).click(getClickedItem);
 
         })
+
+
+
+            // Monta e exibe uma mensagem de erro dentro da tabela correspondente.
+            tableData = '<tr><td>Nenhum registro encontrado.</td></tr>';
+            $(tableId + ' tbody').html(tableData);
+        })
+
+    // Termina sem fazer mais nada.
+    return false;
+}
+
+// Processa clique no item da célula da tabela.
+function getClickedItem() {
+
+    // Captura a coleção que foi clicada.    
+    var collection = $(this).attr('class');
+
+    // Captura o 'id' do item clicado.
+    var id = $(this).attr('data-id');
+
+    // Debug: Mostra dados do item clicado.
+    console.log("Coleção:", collection, "ID:", id);
+    console.log("Endpoint:", `/${collection}/${id}`);
+    
+    // Passando dados para a página 'view'.
+    // Cria um JSON com os dados a serem passados.
+    JSONData = {
+        "origin": "home",
+        "collection": collection,
+        "id": id
+    }
+
+    // Armazena o JSON no sessionStorage do navegador.
+    sessionStorage.viewData = JSON.stringify(JSONData);
+    
+    // Carrega a página 'view' para exibir detalhes do registro.
+    loadPage('view');
+
+}
+
+// Roda o aplicativo quando a página estiver pronta.
 
         // jQuery: se falhou ou ler a API...
         .fail((error) => {
@@ -84,4 +137,5 @@ function getAll(endPoint, tableId) {
 }
 
 // jQuery: roda o aplicativo principal quando a página estiver pronta.
+
 $(document).ready(myHome);

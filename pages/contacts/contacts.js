@@ -1,11 +1,38 @@
-// Inicializa a lista de redes sociais usada na barra complementar.
+
+// Executa o Aplicativo javaScript quando o documento estiver pronto.
+$(document).ready(myContacts)
+
+// nicializa a lista de redes sociais.
 var htmlSocialList = '';
+
+// Aplicativo principal.
+function myContacts() {
+    // Define o título da página.
+    changeTitle('Faça contato');
+
+    // Chama a função que monta a lista de redes sociais.
+    makeSocialList();
+
+    // Monitora o envio do formulário de contatos.
+    $('#contacts').submit(sendContact);
+
+    // Monitora 'mouseover' sobre os ícones das rdes sociais.
+    $('.contacts a').mouseover(animeIcon)
+
+    // Monitora 'mouseout' sobre os ícones das redes socias.
+    $('.contacts a').mouseout(noAnimeIcon)
+}
+
+// Aplicativo que processa o envio do formulário de contatos.
+
+// Inicializa a lista de redes sociais usada na barra complementar.
+
 
 // Inicializa a super global da view.
 viewHTML = '';
 
 // Aplicativo principal.
-function myContacts() {
+
 
     // Define o título da página.
     changeTitle('Faça contato');
@@ -24,6 +51,7 @@ function myContacts() {
 }
 
 // Função que processa o envio do formulário de contatos.
+
 function sendContact(ev) {
     var feedback; // Contém o feedback para o usuário.
     ev.preventDefault(); // Bloqueia reenvio do formulário.
@@ -38,8 +66,20 @@ function sendContact(ev) {
         if (formJSON[key] == '') // Se o campo não foi preenchido...
             return false; // Sai sem fazer nada.
 
-    // formJSON.date = now(); // Obtém a data atual para 'formJSON'.
-    // formJSON.status = 'received'; // Obtém o status 'default' para 'formJSON'.
+
+    if (saveData(formJSON)) {
+        var firstName = formJSON.name.split(' ')[0];
+        feedback = `
+            <h3>Olá ${firstName}!</h3>
+            <p>Seu contato foi enviado com sucesso.</p>
+            <p>Obrigado...</p>
+        `;
+    } else {
+        feedback = `
+            <h3>Oooops!</h3>
+            <p>Não foi possível enviar seu contato. Ocorreu uma falha no servidor.</p>
+        `;
+    }
 
     saveData(formJSON); // Envia dados para salvamento.
 
@@ -47,8 +87,30 @@ function sendContact(ev) {
     return false;
 }
 
-// Função que envia os dados do formulário para a API.
+
+// Aplicativo que envia os dados do formulário para a API.
 function saveData(data) {
+    console.log(data);
+
+    // Executa o método POST na URL da API, passando os dados como parâmetro.
+    $.post(
+        'https://front-test-dca71-default-rtdb.firebaseio.com/contact/.json',
+        JSON.stringify(data)
+    )
+        .done((certo) => {
+            console.log('certo:', certo)
+            return true;
+        })
+        .fail((errou) => {
+            console.log('errou:', errou)
+            return false;
+        })
+}
+
+// Aplicativo que 'monta' a lista de redes sociais.
+
+// Função que envia os dados do formulário para a API.
+ 
 
     // Monta a URL da requisição.
     requestURL = `${app.apiBaseURL}/contacts`;
@@ -88,9 +150,10 @@ function saveData(data) {
     // Conclui sem fazer mais nada.
     return false;
 
-}
+
 
 // Função que 'monta' a lista de redes sociais.
+
 function makeSocialList() {
     app.socialList.forEach(item => {
         htmlSocialList += `
